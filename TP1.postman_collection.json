@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "9ca1a378-90a3-48e9-a96b-06fd43da7ca5",
+		"name": "TP1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42775403"
+	},
+	"item": [
+		{
+			"name": "Create film",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titre\": \"Inception\",\r\n  \"date_sortie\": 2010,\r\n  \"genre\": \"Sci-Fi\",\r\n  \"acteurs\": [\r\n    {\r\n      \"acteur_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    },\r\n    {\r\n      \"acteur_id\": 2,\r\n      \"role\": \"Robert Fischer\"\r\n    }\r\n  ],\r\n  \"note\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/films",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create acteur",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nom\": \"Leonardo DiCaprio\",\r\n  \"anniversaire\": \"1974-11-11\",\r\n  \"filmographie\": [\r\n    {\r\n      \"film_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/acteur",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"acteur"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
