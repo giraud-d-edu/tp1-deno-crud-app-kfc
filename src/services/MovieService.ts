@@ -10,4 +10,8 @@ export class MovieService {
     createMovie(movie: Movie): Movie{
         return this.repository.create(movie);
     }
+
+    getAllMovies(): Movie[] {
+        return this.repository.findAll();
+    }
 }

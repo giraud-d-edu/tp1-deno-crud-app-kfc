@@ -1,276 +1,85 @@
 {
 	"info": {
-		"_postman_id": "9ca1a378-90a3-48e9-a96b-06fd43da7ca5",
+		"_postman_id": "c84c9b40-d5f7-404f-96bc-f90a527cec43",
 		"name": "TP1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "42775403"
+		"_exporter_id": "30539554"
 	},
 	"item": [
 		{
-			"name": "Films",
-			"item": [
-				{
-					"name": "Create film",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"titre\": \"Inception\",\r\n  \"date_sortie\": 2010,\r\n  \"genre\": \"Sci-Fi\",\r\n  \"acteurs\": [\r\n    {\r\n      \"acteur_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    },\r\n    {\r\n      \"acteur_id\": 2,\r\n      \"role\": \"Robert Fischer\"\r\n    }\r\n  ],\r\n  \"note\": null\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/films",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"films"
-							]
+			"name": "Create film",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titre\": \"Inception\",\r\n  \"date_sortie\": 2010,\r\n  \"genre\": \"Sci-Fi\",\r\n  \"acteurs\": [\r\n    {\r\n      \"acteur_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    },\r\n    {\r\n      \"acteur_id\": 2,\r\n      \"role\": \"Robert Fischer\"\r\n    }\r\n  ],\r\n  \"note\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					},
-					"response": []
+					}
 				},
-				{
-					"name": "Get All films",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/films",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"films"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get film by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/films/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"films",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update film by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"titre\": \"Film modifié\",\r\n  \"date_sortie\": 2010,\r\n  \"genre\": \"genre modifié\",\r\n  \"acteurs\": [\r\n    {\r\n      \"acteur_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    },\r\n    {\r\n      \"acteur_id\": 2,\r\n      \"role\": \"Robert Fischer\"\r\n    }\r\n  ],\r\n  \"note\": null\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/films/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"films",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete film by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/films/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"films",
-								"1"
-							]
-						}
-					},
-					"response": []
+				"url": {
+					"raw": "http://localhost:8000/films",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"films"
+					]
 				}
-			]
+			},
+			"response": []
 		},
 		{
-			"name": "Acteurs",
-			"item": [
-				{
-					"name": "Create acteur",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1,\r\n  \"nom\": \"Leonardo DiCaprio\",\r\n  \"anniversaire\": \"1974-11-11\",\r\n  \"filmographie\": [\r\n    {\r\n      \"film_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    }\r\n  ]\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/acteur",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"acteur"
-							]
+			"name": "Create acteur",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nom\": \"Leonardo DiCaprio\",\r\n  \"anniversaire\": \"1974-11-11\",\r\n  \"filmographie\": [\r\n    {\r\n      \"film_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					},
-					"response": []
+					}
 				},
-				{
-					"name": "Get All acteurs",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/acteurs",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"acteurs"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get acteur by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/acteurs/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"acteurs",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update acteur by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1,\r\n  \"nom\": \"acteur modifié\",\r\n  \"anniversaire\": \"1974-11-11\",\r\n  \"filmographie\": [\r\n    {\r\n      \"film_id\": 1,\r\n      \"role\": \"Dom Cobb\"\r\n    }\r\n  ]\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/acteurs/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"acteurs",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete acteur by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/acteurs/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"acteurs",
-								"1"
-							]
-						}
-					},
-					"response": []
+				"url": {
+					"raw": "http://localhost:8000/acteur",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"acteur"
+					]
 				}
-			]
+			},
+			"response": []
+		},
+		{
+			"name": "Get Films",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/films",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

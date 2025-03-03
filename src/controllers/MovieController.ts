@@ -10,4 +10,8 @@ router.post("/films", async (ctx) => {
     ctx.response.body = newBook;
 });
 
+router.get("/films", (ctx) => {
+    ctx.response.body = movieService.getAllMovies();
+});
+
 export default router;

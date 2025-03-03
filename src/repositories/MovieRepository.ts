@@ -8,4 +8,8 @@ export class MovieRepository {
         this.movies.push(newMovie);
         return newMovie;
     }
+
+    findAll(): Movie[] {
+        return this.movies;
+    }
 }
