@@ -14,4 +14,59 @@ router.get("/films", (ctx) => {
     ctx.response.body = movieService.getAllMovies();
 });
 
+router.get("/films/:id", (ctx) => {
+    const id = parseInt(ctx.params.id);
+    if (isNaN(id)) {
+        ctx.response.status = 400;
+        ctx.response.body = { error: "Invalid ID" };
+        return;
+    }
+
+    const movie = movieService.getMovieById(id);
+    if (!movie) {
+        ctx.response.status = 404;
+        ctx.response.body = { error: "Movie not found" };
+        return;
+    }
+
+    ctx.response.body = movie;
+});
+
+router.delete("/films/:id", (ctx) => {
+    const id = parseInt(ctx.params.id);
+    if (isNaN(id)) {
+        ctx.response.status = 400;
+        ctx.response.body = { error: "Invalid ID" };
+        return;
+    }
+
+    const success = movieService.deleteMovieById(id);
+    if (!success) {
+        ctx.response.status = 404;
+        ctx.response.body = { error: "Movie not found" };
+        return;
+    }
+
+    ctx.response.status = 204;
+});
+
+router.put("/films/:id", async (ctx) => {
+    const id = parseInt(ctx.params.id);
+    if (isNaN(id)) {
+        ctx.response.status = 400;
+        ctx.response.body = { error: "Invalid ID" };
+        return;
+    }
+
+    const body = await ctx.request.body.json();
+    const updatedMovie = movieService.updateMovieById(id, body);
+    if (!updatedMovie) {
+        ctx.response.status = 404;
+        ctx.response.body = { error: "Movie not found" };
+        return;
+    }
+
+    ctx.response.body = updatedMovie;
+});
+
 export default router;
