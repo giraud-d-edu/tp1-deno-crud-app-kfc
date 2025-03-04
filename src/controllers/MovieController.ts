@@ -16,7 +16,7 @@ export const getMovies = async (context: Context) => {
 };
 
 
-export const getMovieById = async (context: RouterContext<"/movies/:id">) => {
+export const getMovieById = async (context: RouterContext<"/films/:id">) => {
     const id = context.params?.id;
     const movie = await movieService.getMovieById(id);
 
@@ -28,7 +28,7 @@ export const getMovieById = async (context: RouterContext<"/movies/:id">) => {
     context.response.body = movie;
 };
 
-export const deleteMovieById = async (context: RouterContext<"/movies/:id">) => {
+export const deleteMovieById = async (context: RouterContext<"/films/:id">) => {
     const id = context.params.id;
     const success = await movieService.deleteMovieById(id);
     if (!success) {
@@ -40,7 +40,7 @@ export const deleteMovieById = async (context: RouterContext<"/movies/:id">) => 
     context.response.body= {message: "Succes deleting movie"}
 };
 
-export const updateMovieById = async (context: RouterContext<"/movies/:id">) => {
+export const updateMovieById = async (context: RouterContext<"/films/:id">) => {
     const id = context.params.id;
 
     const body = await context.request.body.json();
