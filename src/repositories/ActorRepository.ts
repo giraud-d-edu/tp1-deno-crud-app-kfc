@@ -1,39 +1,40 @@
 import { Actor } from "../models/Actor.ts"
 import { actors } from "../data.ts";
+import { ObjectId } from "npm:mongodb@5.6.0";
+import { db } from "../config/database.ts";
+
+const actorCollection = db.collection("actor");
 
 export class ActorRepository {
-    private actors: Actor[] = actors
-    private nextId = actors.length + 1;
 
-    create(actor: Omit<Actor, 'acteur_id'>): Actor {
-        const newActor: Actor = {acteur_id: this.nextId++, ...actor };
-        this.actors.push(newActor);
+    async create(actor: Actor) {
+        const newActor = await actorCollection.insertOne(actor);
         return newActor;
     }
 
-    findAll(): Actor[] {
-        return this.actors;
+    async findAll(): Promise<Actor[]> {
+        return await actorCollection.find({}).toArray();
     }
 
-    getById(id: number): Actor | undefined {
-        return this.actors.find(actor => actor.acteur_id === id);
+    async getById(id: string): Promise<Actor> {
+        const objectId = new ObjectId(id);
+        return await actorCollection.findOne({ _id: objectId }) || null;
     }
 
-    deleteById(id: number): boolean {
-        const index = this.actors.findIndex(actor => actor.acteur_id === id);
-        if (index !== -1) {
-            this.actors.splice(index, 1);
-            return true;
-        }
-        return false;
+    async deleteById(id: string): Promise<boolean> {
+        const objectId = new ObjectId(id);
+        await actorCollection.deleteOne({ _id: objectId });
+        return true;
     }
 
-    updateById(acteur_id: number, updatedActor: Actor): Actor | undefined {
-        const index = this.actors.findIndex(actor => actor.acteur_id === acteur_id);
-        if (index !== -1) {
-            this.actors[index] = { ...updatedActor, acteur_id };
-            return this.actors[index];
-        }
-        return undefined;
+    async updateById(acteur_id: string, updatedActor: Actor): Promise<Actor> {
+        const objectId = new ObjectId(acteur_id);
+        const result = await actorCollection.findOneAndUpdate(
+            { _id: objectId },
+            { $set: updatedActor},
+            { returnDocument: "after"}
+        );
+        console.log(result);
+        return result.value;
     }
 }

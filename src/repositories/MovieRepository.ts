@@ -6,8 +6,6 @@ import { MovieDTO, toMovieDTO } from "../dtos/MovieDto.ts";
 const movieCollection = db.collection("movies");
 
 export class MovieRepository {
-    private movies: Movie[] = []
-    private nextId = 1;
 
     async create(movie: Movie) {
         const result = await movieCollection.insertOne(movie);

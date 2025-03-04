@@ -8,23 +8,23 @@ export class ActorService {
         this.repository = new ActorRepository();
     }
 
-    createActor(Actor: Actor): Actor{
+    createActor(Actor: Actor){
         return this.repository.create(Actor);
     }
 
-    getAllActors(): Actor[] {
-        return this.repository.findAll();
+    async getAllActors(): Promise<Actor[]> {
+        return await this.repository.findAll();
     }
     
-    getActorById(id: number): Actor | undefined {
-        return this.repository.getById(id);
+    async getActorById(id: string): Promise<Actor> {
+        return await this.repository.getById(id);
     }
 
-    deleteActorById(id: number): boolean {
-        return this.repository.deleteById(id);
+    async deleteActorById(id: string): Promise<Boolean> {
+        return await this.repository.deleteById(id);
     }
 
-    updateActorById(id: number, updatedActor: Actor): Actor | undefined {
-        return this.repository.updateById(id, updatedActor);
+    async updateActorById(id: string, updatedActor: Actor): Promise<Actor> {
+        return await this.repository.updateById(id, updatedActor);
     }
 }
