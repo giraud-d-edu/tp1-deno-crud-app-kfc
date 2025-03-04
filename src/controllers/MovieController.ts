@@ -5,17 +5,17 @@ const movieService = new MovieService();
 
 export const createMovie = async (context: Context) => {
     const body = await context.request.body.json();
-    const newBook = movieService.createMovie(body);
+    const newBook = await movieService.createMovie(body);
     context.response.status = 201;
     context.response.body = newBook;
 };
 
-export const getMovies = (context: Context) => {
-    context.response.body = movieService.getAllMovies();
+export const getMovies = async (context: Context) => {
+    context.response.body = await movieService.getAllMovies();
 };
 
 
-export const getMovieById = (context: Context) => {
+export const getMovieById = async (context: Context) => {
     const id = context.params.id;
     const movie = await movieService.getMovieById(id);
 
@@ -27,7 +27,7 @@ export const getMovieById = (context: Context) => {
     context.response.body = movie;
 };
 
-export const deleteMovieById = (context: Context) => {
+export const deleteMovieById = async (context: Context) => {
     const id = context.params.id;
     const success = await movieService.deleteMovieById(id);
     if (!success) {
@@ -35,7 +35,7 @@ export const deleteMovieById = (context: Context) => {
         context.response.body = { error: "Movie not found" };
         return;
     }
-    context.response.status = 204;
+    context.response.status = 200;
     context.response.body= {message: "Succes deleting movie"}
 };
 
