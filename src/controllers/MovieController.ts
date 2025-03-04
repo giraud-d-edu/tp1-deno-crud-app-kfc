@@ -1,73 +1,66 @@
-import { Router } from "https://deno.land/x/oak/mod.ts";
+import { Context } from "../deps.ts";
 import { MovieService } from "../services/MovieService.ts";
-const router = new Router();
+
 const movieService = new MovieService();
 
-router.post("/films", async (ctx) => {
-    const body = await ctx.request.body.json();
+export const createMovie = async (context: Context) => {
+    const body = await context.request.body.json();
     const newBook = movieService.createMovie(body);
-    ctx.response.status = 201;
-    ctx.response.body = newBook;
-});
+    context.response.status = 201;
+    context.response.body = newBook;
+};
 
-router.get("/films", async (ctx) => {
-    const films = await movieService.getAllMovies();
-    ctx.response.body = films;
-});
+export const getMovies = (context: Context) => {
+    context.response.body = movieService.getAllMovies();
+};
 
-router.get("/films/:id", (ctx) => {
-    const id = parseInt(ctx.params.id);
+export const getMovieById = (context: Context) => {
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid ID" };
+        context.response.status = 400;
+        context.response.body = { error: "Invalid ID" };
         return;
     }
 
     const movie = movieService.getMovieById(id);
     if (!movie) {
-        ctx.response.status = 404;
-        ctx.response.body = { error: "Movie not found" };
+        context.response.status = 404;
+        context.response.body = { error: "Movie not found" };
         return;
     }
+    context.response.body = movie;
+};
 
-    ctx.response.body = movie;
-});
-
-router.delete("/films/:id", (ctx) => {
-    const id = parseInt(ctx.params.id);
+export const deleteMovieById = (context: Context) => {
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid ID" };
+        context.response.status = 400;
+        context.response.body = { error: "Invalid ID" };
         return;
     }
 
     const success = movieService.deleteMovieById(id);
     if (!success) {
-        ctx.response.status = 404;
-        ctx.response.body = { error: "Movie not found" };
+        context.response.status = 404;
+        context.response.body = { error: "Movie not found" };
         return;
     }
+    context.response.status = 204;
+};
 
-    ctx.response.status = 204;
-});
-
-router.put("/films/:id", async (ctx) => {
-    const id = parseInt(ctx.params.id);
+export const updateMovieById = async (context: Context) => {
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid ID" };
+        context.response.status = 400;
+        context.response.body = {error: "Invalid ID"};
         return;
     }
-
-    const body = await ctx.request.body.json();
+    const body = await context.request.body.json();
     const updatedMovie = movieService.updateMovieById(id, body);
     if (!updatedMovie) {
-        ctx.response.status = 404;
-        ctx.response.body = { error: "Movie not found" };
+        context.response.status = 404;
+        context.response.body = {error: "Movie not found"};
         return;
     }
-
-    ctx.response.body = updatedMovie;
-});
-
-export default router;
+    context.response.body = updatedMovie;
+};
