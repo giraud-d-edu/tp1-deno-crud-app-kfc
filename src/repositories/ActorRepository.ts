@@ -16,7 +16,15 @@ export class ActorRepository {
         return await actorCollection.find({}).toArray();
     }
 
-    async getById(id: string): Promise<Actor> {
+    async getById(id: string): Promise<Actor | null> {
+        if (!isNaN(Number(id))) {
+            return await actorCollection.findOne({ _id: Number(id) });
+        }
+
+        if (!ObjectId.isValid(id)) {
+            throw new Error("ID invalide : doit être une chaîne de 24 caractères hexadécimaux.");
+        }
+
         const objectId = new ObjectId(id);
         return await actorCollection.findOne({ _id: objectId }) || null;
     }

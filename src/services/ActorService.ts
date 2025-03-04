@@ -16,7 +16,7 @@ export class ActorService {
         return await this.repository.findAll();
     }
     
-    async getActorById(id: string): Promise<Actor> {
+    async getActorById(id: string): Promise<Actor | null> {
         return await this.repository.getById(id);
     }
 
