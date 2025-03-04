@@ -1,6 +1,7 @@
 import { Movie } from "../models/Movie.ts"
 import { ObjectId } from "npm:mongodb@5.6.0";
 import { db } from "../config/database.ts";
+import { MovieDTO, toMovieDTO } from "../dtos/MovieDto.ts";
 
 const movieCollection = db.collection("movies");
 
@@ -13,16 +14,24 @@ export class MovieRepository {
         return result;
     }
 
-    async findAll(): Promise<Movie[]> {
-        const movies = await movieCollection.find({}).toArray();
-        return movies;
+    async findAll(): Promise<MovieDTO[]> {
+        const movies: Movie[] = await movieCollection.find({}).toArray();
+        return movies.map(toMovieDTO);
     }
 
-    async getById(id: string): Promise<Movie> {
+    async getById(id: string): Promise<Movie | null> {
+        if (!isNaN(Number(id))) {
+            return await movieCollection.findOne({ _id: Number(id) });
+        }
+
+        if (!ObjectId.isValid(id)) {
+            throw new Error("ID invalide : doit être une chaîne de 24 caractères hexadécimaux.");
+        }
+
         const objectId = new ObjectId(id);
-        const movie = await movieCollection.findOne({ _id: objectId})
-        return movie;
+        return await movieCollection.findOne({ _id: objectId }) || null;
     }
+
 
     async deleteById(id: string): Promise<boolean> {
         const objectId = new ObjectId(id);

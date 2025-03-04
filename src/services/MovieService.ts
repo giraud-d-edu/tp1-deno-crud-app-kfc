@@ -1,3 +1,4 @@
+import { MovieDTO } from "../dtos/MovieDto.ts";
 import { Movie } from "../models/Movie.ts"
 import { MovieRepository } from "../repositories/MovieRepository.ts"
 export class MovieService {
@@ -11,12 +12,11 @@ export class MovieService {
         return this.repository.create(movie);
     }
 
-    async getAllMovies(): Promise<Movie[]> {
-        const movies = await this.repository.findAll();
-        return movies;
+    async getAllMovies(): Promise<MovieDTO[]> {
+        return await this.repository.findAll();
     }
 
-    async getMovieById(id: string): Promise<Movie> {
+    async getMovieById(id: string): Promise<Movie | null> {
         return this.repository.getById(id);
     }
 
