@@ -1,3 +1,4 @@
+import { MovieDTO, toMovieDTO } from "../dtos/MovieDto.ts";
 import { Movie } from "../models/Movie.ts"
 
 export class MovieRepository {
@@ -10,8 +11,8 @@ export class MovieRepository {
         return newMovie;
     }
 
-    findAll(): Movie[] {
-        return this.movies;
+    findAll(): MovieDTO[] {
+        return this.movies.map(toMovieDTO);
     }
 
     getById(id: number): Movie | undefined {
