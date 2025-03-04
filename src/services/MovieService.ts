@@ -7,12 +7,14 @@ export class MovieService {
         this.repository = new MovieRepository();
     }
 
-    createMovie(movie: Omit<Movie, 'id'>): Movie{
+    createMovie(movie: Movie){
         return this.repository.create(movie);
     }
 
-    getAllMovies(): Movie[] {
-        return this.repository.findAll();
+    async getAllMovies(): Promise<Movie[]> {
+        const movies = await this.repository.findAll();
+        console.log(movies)
+        return movies;
     }
 
     getMovieById(id: number): Movie | undefined {
