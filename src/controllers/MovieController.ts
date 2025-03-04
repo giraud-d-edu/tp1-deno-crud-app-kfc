@@ -10,8 +10,9 @@ router.post("/films", async (ctx) => {
     ctx.response.body = newBook;
 });
 
-router.get("/films", (ctx) => {
-    ctx.response.body = movieService.getAllMovies();
+router.get("/films", async (ctx) => {
+    const films = await movieService.getAllMovies();
+    ctx.response.body = films;
 });
 
 router.get("/films/:id", (ctx) => {

@@ -1,18 +1,21 @@
-import { MovieDTO, toMovieDTO } from "../dtos/MovieDto.ts";
 import { Movie } from "../models/Movie.ts"
+
+import { db } from "../config/database.ts";
+
+const movieCollection = db.collection("movies");
 
 export class MovieRepository {
     private movies: Movie[] = []
     private nextId = 1;
 
-    create(movie: Omit<Movie, 'id'>): Movie {
-        const newMovie: Movie = {id: this.nextId++, ...movie };
-        this.movies.push(newMovie);
-        return newMovie;
+    async create(movie: Movie) {
+        const result = await movieCollection.insertOne(movie);
+        return result;
     }
 
-    findAll(): MovieDTO[] {
-        return this.movies.map(toMovieDTO);
+    async findAll(): Promise<Movie[]> {
+        const movies = await movieCollection.find({}).toArray();
+        return movies;
     }
 
     getById(id: number): Movie | undefined {
