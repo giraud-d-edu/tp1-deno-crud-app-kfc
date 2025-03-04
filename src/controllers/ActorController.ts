@@ -1,71 +1,65 @@
-import { Router } from "https://deno.land/x/oak/mod.ts";
-import { ActorService } from "../services/ActorService.ts";
-const router = new Router();
+import {Context} from "../deps.ts";
+import {ActorService} from "../services/ActorService.ts";
+
 const actorService = new ActorService();
 
-router.post("/acteurs", async (ctx) => {
-    const body = await ctx.request.body.json();
+export const createActor = async (context: Context) => {
+    const body = await context.request.body.json();
     const newActor = actorService.createActor(body);
-    ctx.response.status = 201;
-    ctx.response.body = newActor;
-});
+    context.response.status = 201;
+    context.response.body = newActor;
+};
 
-router.get("/acteurs", (ctx) => {
-    ctx.response.body = actorService.getAllActors();
-});
+export const getActors = (context: Context) => {
+    context.response.body = actorService.getAllActors();
+};
 
-router.get("/acteurs/:id", (ctx) => {
-    const id = parseInt(ctx.params.id);
+export const getActorById = (context: Context) => {
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid ID" };
+        context.response.status = 400;
+        context.response.body = {error: "Invalid ID"};
         return;
     }
 
     const actor = actorService.getActorById(id);
     if (!actor) {
-        ctx.response.status = 404;
-        ctx.response.body = { error: "Actor not found" };
+        context.response.status = 404;
+        context.response.body = {error: "Actor not found"};
         return;
     }
+    context.response.body = actor;
+};
 
-    ctx.response.body = actor;
-});
-
-router.delete("/acteurs/:id", (ctx) => {
-    const id = parseInt(ctx.params.id);
+export const deleteActorById = (context: Context) => {
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid ID" };
+        context.response.status = 400;
+        context.response.body = {error: "Invalid ID"};
         return;
     }
-
     const success = actorService.deleteActorById(id);
     if (!success) {
-        ctx.response.status = 404;
-        ctx.response.body = { error: "Actor not found" };
+        context.response.status = 404;
+        context.response.body = {error: "Actor not found"};
         return;
     }
+    context.response.status = 204;
+};
 
-    ctx.response.status = 204;
-});
-
-router.put("/acteurs/:id", async (ctx) => {
-    const id = parseInt(ctx.params.id);
+export const updateActorById = async (context: Context) => {
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "Invalid ID" };
+        context.response.status = 400;
+        context.response.body = {error: "Invalid ID"};
         return;
     }
-
-    const body = await ctx.request.body.json();
+    const body = await context.request.body.json();
     const updatedActor = actorService.updateActorById(id, body);
     if (!updatedActor) {
-        ctx.response.status = 404;
-        ctx.response.body = { error: "Actor not found" };
+        context.response.status = 404;
+        context.response.body = {error: "Actor not found"};
         return;
     }
-    ctx.response.body = updatedActor;
-});
-
-export default router;
+    context.response.body = updatedActor;
+};
