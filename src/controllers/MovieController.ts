@@ -1,3 +1,4 @@
+import { RouterContext } from "https://deno.land/x/oak@v17.1.4/mod.ts";
 import { Context } from "../deps.ts";
 import { MovieService } from "../services/MovieService.ts";
 
@@ -15,8 +16,8 @@ export const getMovies = async (context: Context) => {
 };
 
 
-export const getMovieById = async (context: Context) => {
-    const id = context.params.id;
+export const getMovieById = async (context: RouterContext<"/movies/:id">) => {
+    const id = context.params?.id;
     const movie = await movieService.getMovieById(id);
 
     if (!movie) {
@@ -27,7 +28,7 @@ export const getMovieById = async (context: Context) => {
     context.response.body = movie;
 };
 
-export const deleteMovieById = async (context: Context) => {
+export const deleteMovieById = async (context: RouterContext<"/movies/:id">) => {
     const id = context.params.id;
     const success = await movieService.deleteMovieById(id);
     if (!success) {
@@ -39,7 +40,7 @@ export const deleteMovieById = async (context: Context) => {
     context.response.body= {message: "Succes deleting movie"}
 };
 
-export const updateMovieById = async (context: Context) => {
+export const updateMovieById = async (context: RouterContext<"/movies/:id">) => {
     const id = context.params.id;
 
     const body = await context.request.body.json();
