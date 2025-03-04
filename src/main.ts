@@ -1,6 +1,8 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
+
 import movieRouter from "./controllers/MovieController.ts";
 import actorRouter from "./controllers/ActorController.ts";
+import "./config/database.ts";
 
 const app = new Application();
 

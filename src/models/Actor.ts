@@ -1,6 +1,8 @@
+import { Filmography } from "./Filmography.ts";
+
 export interface Actor {
-    id: number;
+    acteur_id: number;
     nom: string;
     anniversaire: string;
-    filmographie: Array<{ film_id: number; role: string }>;
+    filmographie: Filmography[];
 }
