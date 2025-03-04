@@ -13,19 +13,18 @@ export class MovieService {
 
     async getAllMovies(): Promise<Movie[]> {
         const movies = await this.repository.findAll();
-        console.log(movies)
         return movies;
     }
 
-    getMovieById(id: number): Movie | undefined {
+    async getMovieById(id: string): Promise<Movie> {
         return this.repository.getById(id);
     }
 
-    deleteMovieById(id: number): boolean {
-        return this.repository.deleteById(id);
+    async deleteMovieById(id: string): Promise<boolean> {
+        return await this.repository.deleteById(id);
     }
 
-    updateMovieById(id: number, updatedMovie: Movie): Movie | undefined {
-        return this.repository.updateById(id, updatedMovie);
+    async updateMovieById(id: string, updatedMovie: Movie): Promise<Movie> {
+        return await this.repository.updateById(id, updatedMovie);
     }
 }

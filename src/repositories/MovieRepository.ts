@@ -1,5 +1,5 @@
 import { Movie } from "../models/Movie.ts"
-
+import { ObjectId } from "npm:mongodb@5.6.0";
 import { db } from "../config/database.ts";
 
 const movieCollection = db.collection("movies");
@@ -18,25 +18,25 @@ export class MovieRepository {
         return movies;
     }
 
-    getById(id: number): Movie | undefined {
-        return this.movies.find(movie => movie.id === id);
+    async getById(id: string): Promise<Movie> {
+        const objectId = new ObjectId(id);
+        const movie = await movieCollection.findOne({ _id: objectId})
+        return movie;
     }
 
-    deleteById(id: number): boolean {
-        const index = this.movies.findIndex(movie => movie.id === id);
-        if (index !== -1) {
-            this.movies.splice(index, 1);
-            return true;
-        }
-        return false;
+    async deleteById(id: string): Promise<boolean> {
+        const objectId = new ObjectId(id);
+        await movieCollection.deleteOne({ _id: objectId });
+        return true;
     }
 
-    updateById(id: number, updatedMovie: Movie): Movie | undefined {
-        const index = this.movies.findIndex(movie => movie.id === id);
-        if (index !== -1) {
-            this.movies[index] = { ...updatedMovie, id };
-            return this.movies[index];
-        }
-        return undefined;
+    async updateById(id: string, updatedMovie: Movie): Promise<Movie> {
+        const objectId = new ObjectId(id);
+        const result = await movieCollection.findOneAndUpdate(
+            { _id: objectId },
+            { $set: updatedMovie },
+            { returnDocument: "after" }
+        );
+        return result.value;
     }
 }
